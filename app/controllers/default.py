@@ -1,15 +1,8 @@
 from app import app
-
-@app.route("/index")
-@app.route("/")
-def index():
-    return "Hello World!"
+from flask import render_template
 
 
-@app.route("/teste/", defaults={'name':None})
-@app.route("/teste/<name>")
-def teste(name):
-    if name:
-        return "Olá, %s!" % name
-    else:
-        return "Olá, Usuario!"
+@app.route("/index/<user>")
+@app.route("/", defaults={"user":None})
+def index(user):
+    return render_template('index.html', user=user)
