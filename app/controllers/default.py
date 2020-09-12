@@ -18,7 +18,7 @@ def index():
     return render_template('index.html')
 
 
-@app.route("/login", methods=['GET','POST'])
+@app.route("/login/", methods=['GET','POST'])
 def login():
     form = LoginForm()
     if form.validate_on_submit():
@@ -33,7 +33,7 @@ def login():
         print(form.errors)
     return render_template('login.html', form=form)
 
-@app.route('/logout')
+@app.route('/logout/')
 def logout():
     logout_user()
     flash("Logged out.")
@@ -48,8 +48,8 @@ def logout():
 
 
 
-@app.route('/teste/<info>')
-@app.route('/teste', defaults={"info": None})
+@app.route('/teste/<info>/')
+@app.route('/teste/', defaults={"info": None})
 def teste(info):
     r = User.query.filter_by(password="1234").all()
     print(r)
