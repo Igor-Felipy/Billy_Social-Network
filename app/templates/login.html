@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% block title %} {{super()}} - login {% endblock %}
 {% block content %}
 <div class="col-md-4 col-md-offset-4">
     <h2>Login</h2>
@@ -36,7 +36,9 @@
             {{ form.remember_me }} Remember me
         </label>
     </div>
-    <button type="submit" class="btn btn-default">Submit</button>
+    <button type="submit" class="btn btn-info">Submit</button>
+    <button class="btn btn-link"><a href="{{ url_for('register')}}">Cadastro</a></button>
+
 </form>
 </div>
 

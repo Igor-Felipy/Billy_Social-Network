@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block title %} {{super()}} - register {% endblock %}
+{% block content %}
+
+<form action="" method="post">
+    {{ form.csrf_token }}
+    <div class="form-group">
+        {{ form.username(class="form-control", placeholder="Usuário") }}
+    </div>
+    <div class="form-group">
+        {{ form.password(class="form-control", placeholder="Senha") }}
+    </div>
+    <div class="form-group">
+        {{ form.name(class="form-control", placeholder="Nome") }}
+    </div>
+    <div class="form-group">
+        {{ form.email(class="form-control", placeholder="E-mail") }}
+    </div>
+    <button type="submit" class="btn btn-info">Cadastrar</button>
+</form>
+
+{% endblock %}

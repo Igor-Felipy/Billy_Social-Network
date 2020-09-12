@@ -3,7 +3,7 @@ from flask import render_template, flash, redirect, url_for
 from flask_login import login_user, logout_user
 
 from app.models.tables import User
-from app.models.forms import LoginForm
+from app.models.forms import LoginForm, RegisterForm
 
 @lm.user_loader
 def load_user(id):
@@ -40,7 +40,21 @@ def logout():
     return redirect(url_for("index"))
 
 
-
+@app.route('/register/', methods=["GET","POST"])
+def register():
+    form = RegisterForm()
+    if form.validate_on_submit():
+        try:
+            NewUserData = User(form.username.data,form.password.data,form.name.data, form.email.data)
+            print(NewUserData)
+            db.session.add(NewUserData)
+            db.session.commit()
+            return redirect(url_for("login"))
+        except:
+            return redirect(url_for("register"))
+    else:
+        print(form.errors)
+    return render_template('register.html', form=form)
 
 
 

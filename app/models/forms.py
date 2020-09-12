@@ -7,3 +7,9 @@ class LoginForm(Form):
     username = StringField("username", validators=[DataRequired()])
     password = PasswordField("password", validators=[DataRequired()])
     remember_me = BooleanField("remember_me")
+
+class RegisterForm(Form):
+    username = StringField("username", validators=[DataRequired()])
+    password = PasswordField("password", validators=[DataRequired()])
+    name = StringField("name", validators=[DataRequired()])
+    email = StringField("email", validators=[DataRequired()])
