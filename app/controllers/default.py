@@ -71,21 +71,10 @@ def post():
         if form.validate_on_submit():
             try:
                 NewPost = Post(form.content.data, current_user.get_id())
+                db.session.add(NewPost)
+                db.session.commit()
+                print(NewPost)
+                redirect(url_for("index"))
             except:
                 return redirect(url_for("post"))
 
-
-@app.route('/teste/<info>/')
-@app.route('/teste/', defaults={"info": None})
-def teste(info):
-    r = User.query.filter_by(password="1234").all()
-    print(r)
-    return "ok"
-
-
-
-
-# uso do create
-#    i = User("IgorFelip","123","Igor Felipy", "igor@gmail.com")
-#    db.session.add(i)
-#    db.session.commit()
