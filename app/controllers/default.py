@@ -1,9 +1,9 @@
 from app import app, db, lm
-from flask import render_template, flash, redirect, url_for
-from flask_login import login_user, logout_user
+from flask import render_template, flash, redirect, url_for, request
+from flask_login import login_user, logout_user, current_user
 
-from app.models.tables import User
-from app.models.forms import LoginForm, RegisterForm
+from app.models.tables import User, Post
+from app.models.forms import LoginForm, RegisterForm, PostForm
 
 @lm.user_loader
 def load_user(id):
@@ -45,7 +45,7 @@ def register():
     form = RegisterForm()
     if form.validate_on_submit():
         try:
-            NewUserData = User(form.username.data,form.password.data,form.name.data, form.email.data)
+            NewUserData = User(form.username.data,form.password.data,form.name.data,form.email.data)
             print(NewUserData)
             db.session.add(NewUserData)
             db.session.commit()
@@ -57,9 +57,22 @@ def register():
     return render_template('register.html', form=form)
 
 
+@app.route('/posts')
+@app.route('/post/', methods=['GET','POST'])
+def post():
+    form = PostForm()
+    if request.method == 'GET':
+        if current_user.is_authenticated == True:
+            return render_template('post.html', form=form)
 
-
-
+        else:
+            return redirect(url_for("login"))
+    else:
+        if form.validate_on_submit():
+            try:
+                NewPost = Post(form.content.data, current_user.get_id())
+            except:
+                return redirect(url_for("post"))
 
 
 @app.route('/teste/<info>/')

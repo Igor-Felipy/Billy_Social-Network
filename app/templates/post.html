@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %} {{super()}} - New Post {% endblock %} 
+
+{% block topview %} 
+    <h1>Novo Post</h1>
+{% endblock %}
+
+{% block content %}
+    <form action="" method="post">
+        {{ form.csrf_token }}
+        <div class="form-group">
+            <label>Post</label>
+            {{ form.content(class="form-control", placeholder="Diga ao mundo!") }}
+            {% if form.errors.content %}
+            <div class="alert alert-danger" role="alert">
+                <ul>
+                    {% for e in form.errors.content %}
+                        <li>{{ e }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+        </div>
+        <button type="submit" class="btn btn-info">Submit</button>
+    </form>
+    <div class="container">
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+    </div>
+{% endblock %}
