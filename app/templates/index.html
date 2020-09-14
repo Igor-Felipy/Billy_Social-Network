@@ -3,35 +3,26 @@
 {% block title %} {{super()}} - index {% endblock %}
 
 {% block topview%}
-<h1>Bem-vindo ao Toilter</h1>
-<p class="lead">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
+<h1>Bem-vindo ao Toilter!</h1>
+<p class="lead">Comente sobre o seu dia, um programa de televisão ou qualquer coisa que você queira!</p>
+{% if current_user.is_authenticated %}
+{% else %}
 <p><a class="btn btn-lg btn-success" href="#" role="button">Sign up today</a></p>
-
+{% endif %}
 {% endblock %}
+
 {% block content %}
 
-
-  <div class="row marketing">
-    <div class="col-lg-6">
-      <h4>Subheading</h4>
-      <p>Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum.</p>
-
-      <h4>Subheading</h4>
-      <p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur purus sit amet fermentum.</p>
-
-      <h4>Subheading</h4>
-      <p>Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
-    </div>
-
-    <div class="col-lg-6">
-      <h4>Subheading</h4>
-      <p>Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum.</p>
-
-      <h4>Subheading</h4>
-      <p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur purus sit amet fermentum.</p>
-
-      <h4>Subheading</h4>
-      <p>Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
+  <div class="container">
+    <div class="card">
+      <div class="card-header">
+        {NOME}
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">{TEXTO}</h5>
+        <p class="card-text">13/09/2020</p>
+      </div>
     </div>
   </div>
+
 {% endblock %}
