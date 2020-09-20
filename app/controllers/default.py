@@ -92,3 +92,5 @@ def my_profile():
     if current_user.is_authenticated == True:
         user = User.query.filter_by(id=current_user.id)
         return render_template('my_profile.html', profile=user)
+    else:
+        redirect(url_for("register"))
