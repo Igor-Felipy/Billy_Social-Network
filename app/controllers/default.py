@@ -78,3 +78,17 @@ def post():
             except:
                 return redirect(url_for("post"))
 
+@app.route('/profile/<int:id>/')
+def profile(id):
+    user = User.query.filter_by(id=id)
+    if current_user.id == id:
+        return redirect(url_for("my_profile"))
+    else:
+        return render_template('profile.html',profile=user)
+
+
+@app.route('/profile/')
+def my_profile():
+    if current_user.is_authenticated == True:
+        user = User.query.filter_by(id=current_user.id)
+        return render_template('my_profile.html', profile=user)
