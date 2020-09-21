@@ -83,6 +83,7 @@ def profile(id):
     user = User.query.filter_by(id=id)
     if current_user.id == id:
         return redirect(url_for("my_profile"))
+        print(user)
     else:
         return render_template('profile.html',profile=user)
 
