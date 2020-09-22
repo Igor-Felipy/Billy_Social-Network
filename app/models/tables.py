@@ -8,7 +8,9 @@ class User(db.Model):
     username = db.Column(db.String, unique=True)
     password = db.Column(db.String)
     name = db.Column(db.String)
+    about = db.Column(db.Text)
     email = db.Column(db.String, unique=True)
+
 
     @property 
     def is_authenticated(self):
@@ -27,11 +29,12 @@ class User(db.Model):
 
         
 
-    def __init__(self, username, password, name, email):
+    def __init__(self, username, password, name, email, about):
         self.username = username
         self.password = password
         self.name = name
         self.email = email
+        self.about = about
 
     def __repr__(self):
         return "<User %r>" % self.username
@@ -42,12 +45,17 @@ class Post(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.Text)
+    title = db.Column(db.String)
+    date = db.Column(db.DateTime)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+
 
     user = db.relationship('User', foreign_keys=user_id)
 
-    def __ini__(self, content, user_id):
+    def __ini__(self, content, title, date, user_id):
         self.content = content
+        self.title = title 
+        self.date = date
         self.user_id = user_id
 
     def __repr__(self):
