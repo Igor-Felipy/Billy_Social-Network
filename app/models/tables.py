@@ -9,6 +9,7 @@ class User(db.Model):
     password = db.Column(db.String)
     name = db.Column(db.String)
     about = db.Column(db.Text)
+    pic = db.Column(db.String)
     email = db.Column(db.String, unique=True)
 
 
@@ -29,12 +30,13 @@ class User(db.Model):
 
         
 
-    def __init__(self, username, password, name, email, about):
+    def __init__(self, username, password, name, email, about, pic):
         self.username = username
         self.password = password
         self.name = name
         self.email = email
         self.about = about
+        self.pic = pic
 
     def __repr__(self):
         return "<User %r>" % self.username

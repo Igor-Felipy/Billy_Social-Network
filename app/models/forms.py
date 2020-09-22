@@ -15,4 +15,5 @@ class RegisterForm(Form):
     email = StringField("email", validators=[DataRequired()])
 
 class PostForm(Form):
+    title = StringField("title", validators=[DataRequired()])
     content = TextAreaField("content", validators=[DataRequired()])
