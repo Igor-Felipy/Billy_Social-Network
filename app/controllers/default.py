@@ -66,7 +66,6 @@ def post():
     if request.method == 'GET':
         if current_user.is_authenticated == True:
             return render_template('post.html', form=form)
-
         else:
             return redirect(url_for("login"))
     else:
@@ -77,10 +76,12 @@ def post():
                 db.session.add(NewPost)
                 db.session.commit()
                 print(NewPost)
-                redirect(url_for("index"))
+                return redirect(url_for("index"))
             except:
                 print("erro")
                 return redirect(url_for("post"))
+        else:
+            return "ERRO!!"
 
 @app.route('/profile/<int:id>/')
 def profile(id):
