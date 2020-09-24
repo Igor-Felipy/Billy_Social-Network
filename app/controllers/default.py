@@ -1,6 +1,7 @@
 from app import app, db, lm
 from flask import render_template, flash, redirect, url_for, request
 from flask_login import login_user, logout_user, current_user
+from datetime import datetime
 
 from app.models.tables import User, Post
 from app.models.forms import LoginForm, RegisterForm, PostForm
@@ -70,12 +71,14 @@ def post():
     else:
         if form.validate_on_submit():
             try:
-                NewPost = Post(form.content.data, current_user.get_id())
+                date = datetime.now().strftime('%d/%m/%Y %H:%M')
+                NewPost = Post(form.content.data,form.title.data, str(date), current_user.get_id())
                 db.session.add(NewPost)
                 db.session.commit()
                 print(NewPost)
                 redirect(url_for("index"))
             except:
+                print("erro")
                 return redirect(url_for("post"))
 
 @app.route('/profile/<int:id>/')

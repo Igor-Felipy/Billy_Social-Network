@@ -10,6 +10,10 @@
     <form action="" method="post">
         {{ form.csrf_token }}
         <div class="form-group">
+            <label>Título</label>
+            {{ form.title(class="form-control", placeholder="Titulo do Post") }}
+        </div>
+        <div class="form-group">
             <label>Post</label>
             {{ form.content(class="form-control", placeholder="Diga ao mundo!") }}
             {% if form.errors.content %}
