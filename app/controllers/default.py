@@ -35,6 +35,7 @@ def login():
         print(form.errors)
     return render_template('login.html', form=form)
 
+
 @app.route('/logout/')
 def logout():
     logout_user()
@@ -83,14 +84,13 @@ def post():
         else:
             return "ERRO!!"
 
+
 @app.route('/profile/<int:id>/')
 def profile(id):
-    user = User.query.filter_by(id=id)
     posts = Post.query.filter_by(id=id)
 
     if current_user.id == id:
         return redirect(url_for("my_profile"))
-        print(user)
     else:
         return render_template('profile.html',profile=user, posts=posts)
 
