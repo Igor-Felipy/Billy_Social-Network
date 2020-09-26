@@ -16,7 +16,7 @@ def load_user(id):
 @app.route("/index/")
 @app.route("/")
 def index():
-    posts = Post.query.filter_by(id=current_user.get_id())
+    posts = Post.query.filter_by(user_id=current_user.get_id()).all()
     return render_template('index.html',posts=posts)
 
 
