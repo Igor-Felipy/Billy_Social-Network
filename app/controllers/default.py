@@ -96,7 +96,7 @@ def profile(id):
                 print('pagina do perfil ' + str(id))
                 return render_template('profile.html', posts=posts,profile=user)
         except:
-            return redirect(url_for("index"))
+            return redirect(url_for("my_profile"))
 
 
 @app.route('/profile/')
