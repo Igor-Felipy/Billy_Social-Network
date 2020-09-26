@@ -16,7 +16,7 @@ def load_user(id):
 @app.route("/index/")
 @app.route("/")
 def index():
-    posts = Post.query.filter_by(user_id=current_user.get_id()).all()
+    posts = Post.query.filter_by(user_id=current_user.get_id()).order_by(Post.date.desc()).all()
     return render_template('index.html',posts=posts)
 
 
@@ -85,7 +85,7 @@ def post():
 
 @app.route('/profile/<int:id>/')
 def profile(id):
-    posts = Post.query.filter_by(id=id)
+    posts = Post.query.filter_by(user_id=current_user.get_id()).order_by(Post.date.desc()).all()
 
     if current_user.id == id:
         return redirect(url_for("my_profile"))
@@ -97,7 +97,7 @@ def profile(id):
 def my_profile():
     if current_user.is_authenticated == True:
         user = User.query.filter_by(id=current_user.id)
-        posts = Post.query.filter_by(id=current_user.get_id())
+        posts = Post.query.filter_by(user_id=current_user.get_id()).order_by(Post.date.desc()).all()
         return render_template('my_profile.html', profile=user, posts=posts)
     else:
         redirect(url_for("register"))
