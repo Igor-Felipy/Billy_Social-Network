@@ -74,7 +74,7 @@ def post():
             id = current_user.get_id()
             user = User.query.filter_by(id=id).first()
             date = datetime.now().strftime('%d/%m/%Y %H:%M')
-            NewPost = Post(content=form.content.data,title=form.title.data, date=date, user=user.name, nick=user.username)
+            NewPost = Post(content=form.content.data,title=form.title.data, date=date, user=user.name, nick=user.username, user_id=id)
             db.session.add(NewPost)
             db.session.commit()
             print(NewPost)

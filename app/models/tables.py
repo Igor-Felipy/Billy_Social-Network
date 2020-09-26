@@ -49,15 +49,17 @@ class Post(db.Model):
     date = db.Column(db.String)
     user = db.Column(db.String)
     nick = db.Column(db.String)
+    user_id = db.Column(db.Integer)
 
 
 
-    def __ini__(self, content, title, date, user, nick):
+    def __ini__(self, content, title, date, user, nick, user_id):
         self.content = content
         self.title = title 
         self.date = date
         self.user = user 
         self.nick = nick
+        self.user_id = user_id
 
     def __repr__(self):
         return "<Post %r>"
