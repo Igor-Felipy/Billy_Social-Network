@@ -49,15 +49,19 @@ class Post(db.Model):
     content = db.Column(db.Text)
     title = db.Column(db.String)
     date = db.Column(db.DateTime)
+    user = db.Column(db.String)
+    nick = db.Column(db.String)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
 
     user = db.relationship('User', foreign_keys=user_id)
 
-    def __ini__(self, content, title, date, user_id):
+    def __ini__(self, content, title, date, user, nick, user_id):
         self.content = content
         self.title = title 
         self.date = date
+        self.user = user 
+        self.nick = nick
         self.user_id = user_id
 
     def __repr__(self):
