@@ -85,19 +85,25 @@ def post():
 
 @app.route('/profile/<int:id>/')
 def profile(id):
-    posts = Post.query.filter_by(user_id=current_user.get_id()).order_by(Post.date.desc()).all()
-
     if current_user.id == id:
         return redirect(url_for("my_profile"))
     else:
-        return render_template('profile.html', posts=posts)
+        posts = Post.query.filter_by(user_id=id).order_by(Post.date.desc()).all()
+        user = User.query.filter_by(id=id).first()
+        try:
+            print(user.id) 
+            if user.id != False:
+                print('pagina do perfil ' + str(id))
+                return render_template('profile.html', posts=posts,profile=user)
+        except:
+            return redirect(url_for("index"))
 
 
 @app.route('/profile/')
 def my_profile():
     if current_user.is_authenticated == True:
-        user = User.query.filter_by(id=current_user.id)
+        user = User.query.filter_by(id=current_user.id).first()
         posts = Post.query.filter_by(user_id=current_user.get_id()).order_by(Post.date.desc()).all()
         return render_template('my_profile.html', profile=user, posts=posts)
     else:
-        redirect(url_for("register"))
+        redirect(url_for("login"))
