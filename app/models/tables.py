@@ -30,13 +30,11 @@ class User(db.Model):
 
         
 
-    def __init__(self, username, password, name, email, about, pic):
+    def __init__(self, username, password, name, email):
         self.username = username
         self.password = password
         self.name = name
         self.email = email
-        self.about = about
-        self.pic = pic
 
     def __repr__(self):
         return "<User %r>" % self.username
@@ -48,21 +46,18 @@ class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.Text)
     title = db.Column(db.String)
-    date = db.Column(db.DateTime)
+    date = db.Column(db.String)
     user = db.Column(db.String)
     nick = db.Column(db.String)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
 
-    user = db.relationship('User', foreign_keys=user_id)
 
-    def __ini__(self, content, title, date, user, nick, user_id):
+    def __ini__(self, content, title, date, user, nick):
         self.content = content
         self.title = title 
         self.date = date
         self.user = user 
         self.nick = nick
-        self.user_id = user_id
 
     def __repr__(self):
         return "<Post %r>"

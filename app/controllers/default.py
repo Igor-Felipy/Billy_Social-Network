@@ -71,17 +71,14 @@ def post():
             return redirect(url_for("login"))
     else:
         if form.validate_on_submit():
-            try:
-                user = User.query.filter_by(id=current_user.get_id)
-                date = datetime.now().strftime('%d/%m/%Y %H:%M')
-                NewPost = Post(form.content.data,form.title.data, str(date), user.name, user.username, current_user.get_id())
-                db.session.add(NewPost)
-                db.session.commit()
-                print(NewPost)
-                return redirect(url_for("index"))
-            except:
-                print("erro")
-                return redirect(url_for("post"))
+            id = current_user.get_id()
+            user = User.query.filter_by(id=id).first()
+            date = datetime.now().strftime('%d/%m/%Y %H:%M')
+            NewPost = Post(content=form.content.data,title=form.title.data, date=date, user=user.name, nick=user.username)
+            db.session.add(NewPost)
+            db.session.commit()
+            print(NewPost)
+            return redirect(url_for("index"))
         else:
             return "ERRO!!"
 
@@ -93,7 +90,7 @@ def profile(id):
     if current_user.id == id:
         return redirect(url_for("my_profile"))
     else:
-        return render_template('profile.html',profile=user, posts=posts)
+        return render_template('profile.html', posts=posts)
 
 
 @app.route('/profile/')
