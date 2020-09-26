@@ -72,8 +72,9 @@ def post():
     else:
         if form.validate_on_submit():
             try:
+                user = User.query.filter_by(id=current_user.get_id)
                 date = datetime.now().strftime('%d/%m/%Y %H:%M')
-                NewPost = Post(form.content.data,form.title.data, str(date), current_user.get_id())
+                NewPost = Post(form.content.data,form.title.data, str(date), user.name, user.username, current_user.get_id())
                 db.session.add(NewPost)
                 db.session.commit()
                 print(NewPost)
