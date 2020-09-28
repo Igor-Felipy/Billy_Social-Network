@@ -101,10 +101,17 @@ def profile(id):
             return redirect(url_for("my_profile"))
 
 
+def change_name(name):
+    x = name.split(".")
+    x[0] = 'profile_pic'
+    y = '.'.join(x)
+    return y
+
 @app.route('/profile/change_image', methods=['POST'])
 def profile_image():
     UPLOAD_FOLDER = os.path.join(os.getcwd(),str('app/static/images/' + str(current_user.get_id())))
     file = request.files['image']
+    file.filename = change_name(file.filename)
     savePath = os.path.join(UPLOAD_FOLDER, secure_filename(file.filename))
     file.save(savePath)
     return redirect(url_for("my_profile"))
