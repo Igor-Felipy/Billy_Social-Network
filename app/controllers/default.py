@@ -1,7 +1,9 @@
+from werkzeug.utils import secure_filename
 from app import app, db, lm
 from flask import render_template, flash, redirect, url_for, request
 from flask_login import login_user, logout_user, current_user
 from datetime import datetime
+import os
 
 from app.models.tables import User, Post
 from app.models.forms import LoginForm, RegisterForm, PostForm
@@ -97,6 +99,15 @@ def profile(id):
                 return render_template('profile.html', posts=posts,profile=user)
         except:
             return redirect(url_for("my_profile"))
+
+
+@app.route('/profile/change_image', methods=['POST'])
+def profile_image():
+    UPLOAD_FOLDER = os.path.join(os.getcwd(),str('app/static/images/' + str(current_user.get_id())))
+    file = request.files['image']
+    savePath = os.path.join(UPLOAD_FOLDER, secure_filename(file.filename))
+    file.save(savePath)
+    return redirect(url_for("my_profile"))
 
 
 @app.route('/profile/')
