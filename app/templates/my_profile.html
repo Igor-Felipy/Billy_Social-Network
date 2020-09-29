@@ -8,7 +8,7 @@
 <div class="container">
     <div class="span3 well">
         <center>
-        <a href="#aboutModal" data-toggle="modal" data-target="#myModal"><img src="https://picsum.photos/200/200" name="aboutme" width="140" height="140" class="img-circle"></a>
+        <a href="#aboutModal" data-toggle="modal" data-target="#myModal"><img src="{{ profile.pic }}" name="aboutme" width="140" height="140" class="img-circle"></a>
         <h3>{{ profile.name }}</h3>
         <em>click my pic for more</em>
 		</center>
@@ -23,7 +23,7 @@
                     </div>
                 <div class="modal-body">
                     <center>
-                    <img src="https://picsum.photos/200/200" name="aboutme" width="140" height="140" border="0" class="img-circle"></a>
+                    <img src="{{ profile.pic }}" name="aboutme" width="140" height="140" border="0" class="img-circle"></a>
                     <h3 class="media-heading">{{ profile.name }} <small><!-- put the location of the people --></small></h3>
                     
                     </center>

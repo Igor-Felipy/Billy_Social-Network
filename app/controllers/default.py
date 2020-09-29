@@ -101,6 +101,21 @@ def profile(id):
             return redirect(url_for("my_profile"))
 
 
+@app.route('/profile/')
+def my_profile():
+    if current_user.is_authenticated == True:
+        user = User.query.filter_by(id=current_user.id).first()
+        posts = Post.query.filter_by(user_id=current_user.get_id()).order_by(Post.date.desc()).all()
+        return render_template('my_profile.html', profile=user, posts=posts)
+    else:
+        redirect(url_for("login"))
+
+
+
+
+
+
+
 def change_profile_pic_name(name):
     old_name = name.split(".")
     old_name[0] = 'profile_pic'
@@ -110,18 +125,16 @@ def change_profile_pic_name(name):
 @app.route('/profile/change_image', methods=['POST'])
 def profile_image():
     UPLOAD_FOLDER = os.path.join(os.getcwd(),str('app/static/images/' + str(current_user.get_id())))
+    os.mkdir(UPLOAD_FOLDER)
     file = request.files['image']
     file.filename = change_profile_pic_name(file.filename)
     savePath = os.path.join(UPLOAD_FOLDER, secure_filename(file.filename))
     file.save(savePath)
+    prof = User.query.filter_by(id=current_user.get_id()).first()
+    prof.pic = str("/static/images/"+ str(current_user.get_id()) + '/' + str(file.filename)) 
+    db.session.add(prof)
+    db.session.commit()    
+    print(prof.pic)
     return redirect(url_for("my_profile"))
 
 
-@app.route('/profile/')
-def my_profile():
-    if current_user.is_authenticated == True:
-        user = User.query.filter_by(id=current_user.id).first()
-        posts = Post.query.filter_by(user_id=current_user.get_id()).order_by(Post.date.desc()).all()
-        return render_template('my_profile.html', profile=user, posts=posts)
-    else:
-        redirect(url_for("login"))

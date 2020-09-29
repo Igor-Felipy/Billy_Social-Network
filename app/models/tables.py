@@ -30,11 +30,12 @@ class User(db.Model):
 
         
 
-    def __init__(self, username, password, name, email):
+    def __init__(self, username, password, name, email, pic="https://picsum.photos/200/200"):
         self.username = username
         self.password = password
         self.name = name
         self.email = email
+        self.pic = pic
 
     def __repr__(self):
         return "<User %r>" % self.username
