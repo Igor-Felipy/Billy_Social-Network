@@ -3,7 +3,7 @@ from app import app, db, lm
 from flask import render_template, flash, redirect, url_for, request
 from flask_login import login_user, logout_user, current_user
 from datetime import datetime
-import os, shutil
+import os
 
 from app.models.tables import User, Post
 from app.models.forms import LoginForm, RegisterForm, PostForm
@@ -16,10 +16,28 @@ def load_user(id):
 
 
 @app.route("/index/")
-@app.route("/")
+@app.route("/", methods=['GET','POST'])
 def index():
-    posts = Post.query.filter_by(user_id=current_user.get_id()).order_by(Post.date.desc()).all()
-    return render_template('index.html',posts=posts)
+    form_post = PostForm()
+    if request.method == 'GET':
+        if current_user.is_authenticated == True:
+            posts = Post.query.filter_by(user_id=current_user.get_id()).order_by(Post.date.desc()).all()
+            return render_template('index.html',form=form_post,posts=posts)
+        else:
+            return redirect(url_for("login"))
+        
+    else:
+        if form_post.validate_on_submit():
+            id = current_user.get_id()
+            user = User.query.filter_by(id=id).first()
+            date = datetime.now().strftime('%d/%m/%Y %H:%M')
+            NewPost = Post(content=form_post.content.data,title=form_post.title.data, date=date, user=user.name, nick=user.username, user_id=id)
+            db.session.add(NewPost)
+            db.session.commit()
+            print(NewPost)
+            return redirect(url_for("index"))
+        else:
+            return "ERRO!!"
 
 
 @app.route("/login/", methods=['GET','POST'])
@@ -139,5 +157,3 @@ def profile_image():
     print(prof.pic)
     return redirect(url_for("my_profile"))
 
-
-#    shutil.rmtree(UPLOAD_FOLDER)
