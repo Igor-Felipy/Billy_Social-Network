@@ -3,6 +3,7 @@
 {% block title %} {{super()}} - index {% endblock %}
 
 {% block topview%}
+{% if current_user.is_authenticated %}
                 <!--- \\\\\\\Post-->
                 <form action="" method="post">
                     {{ form.csrf_token }}
@@ -42,7 +43,10 @@
                   </div>
               </div>
             </form>
-              <!-- Post /////-->
+            <!-- Post /////-->
+{% else %}
+
+{% endif %}
 {% endblock %}
 
 {% block content %}
