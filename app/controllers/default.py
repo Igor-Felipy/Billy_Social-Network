@@ -3,7 +3,7 @@ from app import app, db, lm
 from flask import render_template, flash, redirect, url_for, request
 from flask_login import login_user, logout_user, current_user
 from datetime import datetime
-import os
+import os, shutil
 
 from app.models.tables import User, Post
 from app.models.forms import LoginForm, RegisterForm, PostForm
@@ -117,15 +117,17 @@ def my_profile():
 
 
 def change_profile_pic_name(name):
+    date = datetime.now().strftime('%d%m%Y%H%M%S')
     old_name = name.split(".")
-    old_name[0] = 'profile_pic'
+    old_name[0] = "profile_pic" + str(date)
     new_name = '.'.join(old_name)
     return new_name
 
 @app.route('/profile/change_image', methods=['POST'])
 def profile_image():
     UPLOAD_FOLDER = os.path.join(os.getcwd(),str('app/static/images/' + str(current_user.get_id())))
-    os.mkdir(UPLOAD_FOLDER)
+    if UPLOAD_FOLDER == True:
+        os.mkdir(UPLOAD_FOLDER)
     file = request.files['image']
     file.filename = change_profile_pic_name(file.filename)
     savePath = os.path.join(UPLOAD_FOLDER, secure_filename(file.filename))
@@ -138,3 +140,4 @@ def profile_image():
     return redirect(url_for("my_profile"))
 
 
+#    shutil.rmtree(UPLOAD_FOLDER)
