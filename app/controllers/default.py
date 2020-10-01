@@ -80,29 +80,6 @@ def register():
     return render_template('register.html', form=form)
 
 
-@app.route('/posts')
-@app.route('/post/', methods=['GET','POST'])
-def post():
-    form = PostForm()
-    if request.method == 'GET':
-        if current_user.is_authenticated == True:
-            return render_template('post.html', form=form)
-        else:
-            return redirect(url_for("login"))
-    else:
-        if form.validate_on_submit():
-            id = current_user.get_id()
-            user = User.query.filter_by(id=id).first()
-            date = datetime.now().strftime('%d/%m/%Y %H:%M')
-            NewPost = Post(content=form.content.data,title=form.title.data, date=date, user=user.name, nick=user.username, user_id=id)
-            db.session.add(NewPost)
-            db.session.commit()
-            print(NewPost)
-            return redirect(url_for("index"))
-        else:
-            return "ERRO!!"
-
-
 @app.route('/profile/<int:id>/')
 def profile(id):
     if current_user.id == id:
@@ -157,3 +134,11 @@ def profile_image():
     print(prof.pic)
     return redirect(url_for("my_profile"))
 
+
+@app.route('/search', methods=['POST'])
+def search():
+    search_data = request.form.get("search_data")
+    search = "%{}%".format(search_data)
+    posts = Post.query.filter(Post.title.like(search)).all()
+    users = User.query.filter(User.name.like(search)).all()
+    return render_template('search.html',users=users, posts=posts, search=search_data)
