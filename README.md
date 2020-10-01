@@ -34,3 +34,9 @@
 3. Run on terminal: Python3 run.py db upgrade
 
 ## Images:
+![index_page](https://github.com/Igor-Felipy/rede_social/blob/master/img/index_page.png)
+![profile](https://github.com/Igor-Felipy/rede_social/blob/master/img/Profile.png)
+![register](https://github.com/Igor-Felipy/rede_social/blob/master/img/register_page.png)
+![login](https://github.com/Igor-Felipy/rede_social/blob/master/img/login_page.png)
+![posts](https://github.com/Igor-Felipy/rede_social/blob/master/img/posts.png)
+![searching](https://github.com/Igor-Felipy/rede_social/blob/master/img/searching_page.png)
